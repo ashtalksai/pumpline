@@ -55,9 +55,10 @@ function formatPrice(cents: number) {
 export default async function ProviderProfilePage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  const provider = demoProviders[params.slug]
+  const { slug } = await params
+  const provider = demoProviders[slug]
 
   if (!provider) notFound()
 
@@ -266,7 +267,7 @@ export default async function ProviderProfilePage({
                   </div>
                 </div>
 
-                <Link href={`/signup?next=/providers/${provider.slug}`} className="block mt-4">
+                <Link href={`/signup?next=/providers/${slug}`} className="block mt-4">
                   <Button
                     className="w-full h-11 font-semibold"
                     style={{ background: "#C45E2C", color: "white", fontFamily: "'Plus Jakarta Sans', sans-serif" }}
